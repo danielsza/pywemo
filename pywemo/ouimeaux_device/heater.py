@@ -128,8 +128,8 @@ class Heater(AttributeDevice):
             temp_fahrenheit = temp_value
 
         # Send to device (always in Fahrenheit).
-        # _set_attributes stores temp_fahrenheit in _attributes["SetTemperature"],
-        # which is what target_temperature expects (it converts F→C on read).
+        # _set_attributes updates _attributes["SetTemperature"]
+        # with F value; target_temperature converts on read.
         self._set_attributes(("SetTemperature", temp_fahrenheit))
 
     def _celsius_to_fahrenheit(self, celsius: float) -> float:
