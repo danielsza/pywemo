@@ -127,14 +127,10 @@ class Heater(AttributeDevice):
         else:
             temp_fahrenheit = temp_value
 
-        # Send to device (always in Fahrenheit)
+        # Send to device (always in Fahrenheit).
+        # _set_attributes stores temp_fahrenheit in _attributes["SetTemperature"],
+        # which is what target_temperature expects (it converts F→C on read).
         self._set_attributes(("SetTemperature", temp_fahrenheit))
-
-        # Update local cache with the value in display units
-        # The device will return it in the current display unit, not Fahrenheit
-        self._attributes["SetTemperature"] = (
-            temp_value  # Store in display unit
-        )
 
     def _celsius_to_fahrenheit(self, celsius: float) -> float:
         """Convert Celsius to Fahrenheit.
